@@ -1,8 +1,6 @@
-import AssetManager from "./assetmanager";
-import GameEngine from "./gameengine";
-
-const CANVAS_WIDTH = 768
-const CANVAS_HEIGHT = 768
+import AssetManager from "./assetmanager.js";
+import Board from "./board.js";
+import GameEngine from "./gameengine.js";
 
 const gameEngine = new GameEngine();
 
@@ -12,11 +10,9 @@ ASSET_MANAGER.downloadAll(() => {
 	const canvas = document.getElementById("gameWorld");
 	const ctx = canvas.getContext("2d");
 
-	
+	gameEngine.addEntity(new Board(gameEngine))
 
 	gameEngine.init(ctx);
 
 	gameEngine.start();
 });
-
-export {CANVAS_WIDTH, CANVAS_HEIGHT}

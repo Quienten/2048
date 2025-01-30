@@ -1,5 +1,7 @@
 // This game shell was happily modified from Googler Seth Ladd's "Bad Aliens" game and his Google IO talk in 2011
 
+import Timer from "./timer.js";
+
 export default class GameEngine {
     constructor(options) {
         // What you will use to draw
@@ -86,7 +88,7 @@ export default class GameEngine {
         // Clear the whole canvas with transparent color (rgba(0, 0, 0, 0))
         this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
 
-        for (let i = 0; i < this.entities.length; i++) {
+        for (let i = this.entities.length - 1; i >= 0; i--) {
             this.entities[i].draw(this.ctx, this);
         }
     };

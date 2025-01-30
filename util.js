@@ -9,9 +9,9 @@ const randomInt = n => Math.floor(Math.random() * n);
 
 /**
  * @param {Number} n
- * @returns Random Number Between start and end
+ * @returns Random Number Between start and end exclusive.
  */
-const randomIntRange = (start, end) => Math.random() * (end - start) + start;
+const randomIntRange = (start, end) => Math.floor(Math.random() * (end - start) + start)
 
 /**
  * @param {Number} r Red Value
