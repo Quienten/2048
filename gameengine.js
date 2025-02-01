@@ -21,8 +21,6 @@ export default class GameEngine {
         this.options = options || {
             debugging: false,
         };
-
-        this.spinning = false;
     };
 
     init(ctx) {
@@ -108,11 +106,6 @@ export default class GameEngine {
             if (this.entities[i].removeFromWorld) {
                 this.entities.splice(i, 1);
             }
-        }
-
-        if (this.keys[' ']) {
-            this.spinning = !this.spinning;
-            this.keys[' '] = false;
         }
     };
 
