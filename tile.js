@@ -27,6 +27,13 @@ export default class Tile {
 
     }
 
+    moveTo(x, y) {
+        tick = this.game.timer.gameTime
+        this.arrival = tick + 1
+        this.newX = x
+        this.newY = y
+    }
+
     draw(ctx) {
         ctx.fillStyle = valueToColor[this.value]
         ctx.beginPath()

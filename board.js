@@ -15,8 +15,10 @@ export default class Board {
             [0, 0, 0, 0],
         ]
         this.tileCount = 0
-        this.addTile()
-        this.addTile()
+        setTimeout(() => {
+            this.addTile()
+            this.addTile()
+        }, 10)
     }
 
     getRandomPos() {
@@ -40,6 +42,7 @@ export default class Board {
         const tile = new Tile(this.game, value, pos.x, pos.y)
         this.board[pos.y][pos.x] = tile
         this.game.addEntity(tile)
+        this.tileCount++
     }
 
     shift(direction) {
@@ -77,11 +80,23 @@ export default class Board {
                     let newLocationY = y
                     while(newLocationX + dir.x >= 0 && newLocationX + dir.x < BOARD_WIDTH &&
                         newLocationY + dir.y >= 0 && newLocationY + dir.y < BOARD_HEIGHT &&
-                        !this.board[newLocationY + dir.y][newLocationX + dir.x]) {
+                        (!this.board[newLocationY + dir.y][newLocationX + dir.x] ||
+                        (this.board[newLocationY + dir.y][newLocationX + dir.x] &&
+                        this.board[newLocationY + dir.y][newLocationX + dir.x].value === this.board[y][x].value))) {
                         newLocationX += dir.x
                         newLocationY += dir.y
                     }
                     if(newLocationX !== x || newLocationY !== y) {
+                        //this.board[newLocationY][newLocationX].moveTo(newLocationX, newLocationY)
+                        if(this.board[newLocationY][newLocationX] && this.board[newLocationY][newLocationX].value === this.board[y][x].value) {
+                            this.board[newLocationY][newLocationX].removeFromWorld = true
+                            this.board[newLocationY][newLocationX] = new Tile(this.game, this.board[y][x].value * 2, newLocationX, newLocationY)
+                            this.board[y][x].removeFromWorld = true
+                            this.board[y][x] = 0
+                            this.game.addEntity(this.board[newLocationY][newLocationX])
+                            this.tileCount--
+                            continue
+                        }
                         this.board[newLocationY][newLocationX] = this.board[y][x]
                         this.board[y][x] = 0
                         this.board[newLocationY][newLocationX].x = newLocationX
@@ -108,6 +123,7 @@ export default class Board {
             this.game.keys['d'] = false
             this.shift('right')
         }
+        console.log(this.board)
     }
 
     draw(ctx) {
