@@ -110,20 +110,26 @@ export default class Board {
     }
 
     update() {
-        if(this.game.keys['w']) {
-            this.game.keys['w'] = false
-            this.shift('up')
-        } else if(this.game.keys['s']) {
-            this.game.keys['s'] = false
-            this.shift('down')
-        } else if(this.game.keys['a']) {
-            this.game.keys['a'] = false
-            this.shift('left')
-        } else if(this.game.keys['d']) {
-            this.game.keys['d'] = false
-            this.shift('right')
+        let keyToDirection = {
+            'w': 'up',
+            's': 'down',
+            'a': 'left',
+            'd': 'right'
         }
-        console.log(this.board)
+        let shiftDirection = null
+        for(let key in keyToDirection) {
+            if(this.game.keys[key]) {
+                this.game.keys[key] = false
+                shiftDirection = keyToDirection[key]
+                break
+            }
+        }
+        if(shiftDirection) {
+            const moved = this.shift(shiftDirection)
+            if (moved) {
+                this.addTile()
+            }
+        }
     }
 
     draw(ctx) {
