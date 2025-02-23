@@ -87,11 +87,11 @@ export default class Board {
                         newLocationY += dir.y
                     }
                     if(newLocationX !== x || newLocationY !== y) {
-                        //this.board[newLocationY][newLocationX].moveTo(newLocationX, newLocationY)
+                    
                         if(this.board[newLocationY][newLocationX] && this.board[newLocationY][newLocationX].value === this.board[y][x].value) {
                             this.board[newLocationY][newLocationX].removeFromWorld = true
                             this.board[newLocationY][newLocationX] = new Tile(this.game, this.board[y][x].value * 2, newLocationX, newLocationY)
-                            this.board[y][x].removeFromWorld = true
+                            this.board[y][x].moveToAndKill(newLocationX, newLocationY)
                             this.board[y][x] = 0
                             this.game.addEntity(this.board[newLocationY][newLocationX])
                             this.tileCount--
@@ -99,8 +99,7 @@ export default class Board {
                         }
                         this.board[newLocationY][newLocationX] = this.board[y][x]
                         this.board[y][x] = 0
-                        this.board[newLocationY][newLocationX].x = newLocationX
-                        this.board[newLocationY][newLocationX].y = newLocationY
+                        this.board[newLocationY][newLocationX].moveTo(newLocationX, newLocationY)
                         moved = true
                     }
                 }
